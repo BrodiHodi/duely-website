@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Join a garage on Duely</title>
+  <meta name="description" content="You've been invited to share a garage on Duely, so you both see what's due.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0E3B43">
+  <link rel="icon" href="../shield.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <style>
+    .invite-code {
+      display: inline-block; margin: 8px 0 24px; padding: 14px 22px;
+      background: var(--card); border-radius: 14px;
+      font-size: 30px; font-weight: 800; letter-spacing: 0.18em; color: var(--harbor);
+    }
+    .steps { counter-reset: step; list-style: none; padding: 0 !important; }
+    .steps li { counter-increment: step; position: relative; padding-left: 40px; margin-bottom: 14px; }
+    .steps li::before {
+      content: counter(step); position: absolute; left: 0; top: 0;
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--teal); color: #fff; font-weight: 700; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .no-code { display: none; }
+    .missing .has-code { display: none; }
+    .missing .no-code { display: block; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../" aria-label="Duely home">
+        <img src="../shield.svg" alt="" width="34" height="34">
+        <span>duely</span>
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="../privacy.html">Privacy</a>
+        <a href="../support.html">Support</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero">
+      <div class="wrap">
+        <span class="eyebrow">Family sharing</span>
+        <h1>You're invited to a garage.</h1>
+        <p>Share vehicles on Duely, so you both see what's due and everything that's been done.</p>
+      </div>
+    </section>
+
+    <div class="prose" id="invite">
+      <div class="has-code">
+        <h2>Open it in Duely</h2>
+        <p>On the iPhone with Duely installed, tap the button. Duely asks you to sign in (or make a free account), then to join.</p>
+        <p><a class="btn btn-primary" id="open" href="cartrackingapp://join">Open in Duely</a></p>
+
+        <h2>Or type the code</h2>
+        <div class="invite-code" id="code" aria-label="Invite code"></div>
+        <ol class="steps">
+          <li>Open Duely and go to <strong>Settings</strong>.</li>
+          <li>Tap <strong>Share your garage</strong>.</li>
+          <li>Under <strong>Got an invite?</strong>, type the code and tap <strong>Join</strong>.</li>
+        </ol>
+        <p>Invites work once, for 7 days. If it's expired, ask for a new one.</p>
+      </div>
+
+      <div class="no-code">
+        <h2>This invite link isn't complete</h2>
+        <p>Ask the person who sent it to send it again. If you have the 8-letter code, open Duely, go to <strong>Settings</strong> → <strong>Share your garage</strong>, and type it under <strong>Got an invite?</strong></p>
+      </div>
+
+      <h2>Don't have Duely yet?</h2>
+      <p>Duely is in testing on iPhone and coming to the App Store soon. Ask the person who invited you to add you as a tester.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="by"><img src="../shield.svg" alt="" width="26" height="26">© 2026 Leverpoint. Duely, by Leverpoint.</div>
+      <nav aria-label="Footer">
+        <a href="../">Home</a>
+        <a href="../privacy.html">Privacy</a>
+        <a href="../terms.html">Terms</a>
+        <a href="../support.html">Support</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // The code from ?code=…: 8 letters/digits (no 0, O, 1, I or L).
+    var raw = new URLSearchParams(location.search).get("code") || "";
+    var code = raw.toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (/^[A-HJKMNP-Z2-9]{8}$/.test(code)) {
+      document.getElementById("code").textContent = code;
+      document.getElementById("open").href = "cartrackingapp://join?code=" + code;
+    } else {
+      document.getElementById("invite").classList.add("missing");
+    }
+  </script>
+</body>
+</html>
